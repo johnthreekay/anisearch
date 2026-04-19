@@ -1,7 +1,8 @@
 # AniSearch
 
-A self-hosted anime torrent search and download manager that integrates with your existing *arr stack. Search Nyaa, grab torrents to qBittorrent, and trigger Sonarr rescans from one interface.
+> **Note:** AniSearch is feature-frozen. It was the prototype that led to [Ryokan](https://github.com/johnthreekay/ryokan), a self-hosted anime PVR written in Rust that supersedes this project. Ryokan covers everything AniSearch does and a lot more. AniList-aware metadata, multi-source classification, SeaDex integration, Jellyfin post-processing, a Sonarr/Radarr-compatible API, and a proper scoring engine. If you're starting fresh, use Ryokan. If you want to keep using Sonarr and just want better manual search, try AniSearch.
 
+A self-hosted anime torrent search and download manager that integrates with your existing *arr stack. Search Nyaa, grab torrents to qBittorrent, and trigger Sonarr rescans from one interface.
 ## Features
 
 - **Nyaa search** with scoring based on preferred release groups, resolution, batch detection
