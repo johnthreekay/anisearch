@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>AniSearch - Setup</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="auth-gate">
+        <div class="auth-box">
+            <h1 class="logo">ani<span>search</span></h1>
+            <p class="setup-heading">Create your login</p>
+            <p class="setup-sub">First time? Set up a username and password to secure your instance.</p>
+            <div class="form-group">
+                <input type="text" id="username-input" placeholder="Username" autocomplete="username" spellcheck="false" value="admin">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password-input" placeholder="Password (min 8 characters)" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password-confirm" placeholder="Confirm password" autocomplete="new-password">
+            </div>
+            <button onclick="doSetup()">Create account</button>
+            <div id="auth-error" class="error-msg hidden"></div>
+            <div id="setup-success" class="success-msg hidden"></div>
+        </div>
+    </div>
+    <script>
+        function doSetup() {
+            const username = document.getElementById('username-input').value.trim();
+            const password = document.getElementById('password-input').value;
+            const confirm = document.getElementById('password-confirm').value;
+            const errEl = document.getElementById('auth-error');
+            const successEl = document.getElementById('setup-success');
+            errEl.classList.add('hidden');
+            successEl.classList.add('hidden');
+
+            if (!username) {
+                errEl.textContent = 'Username is required';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            if (password.length < 8) {
+                errEl.textContent = 'Password must be at least 8 characters';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            if (password !== confirm) {
+                errEl.textContent = 'Passwords do not match';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            fetch('/api/setup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    successEl.innerHTML = 'Account created! Your API key: <code class="api-key-display">' + data.data.apiKey + '</code><br><small>Save this somewhere — it\'s for programmatic access.</small>';
+                    successEl.classList.remove('hidden');
+                    setTimeout(() => {
+                        window.location.href = data.data.redirect || '/';
+                    }, 4000);
+                } else {
+                    errEl.textContent = data.error || 'Setup failed';
+                    errEl.classList.remove('hidden');
+                }
+            })
+            .catch(() => {
+                errEl.textContent = 'Connection failed';
+                errEl.classList.remove('hidden');
+            });
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') doSetup();
+        });
+
+        document.getElementById('password-input').focus();
+    </script>
+</body>
+</html>

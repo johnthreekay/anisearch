@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>AniSearch</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="main-app">
+            <header>
+                <div class="header-left">
+                    <a href="/" class="logo-link" onclick="goHome(event)"><h1 class="logo">ani<span>search</span></h1></a>
+                </div>
+                <div class="header-center">
+                    <div class="search-bar">
+                        <input type="text" id="search-input" placeholder="Search anime on Nyaa..." autocomplete="off" spellcheck="false">
+                        <select id="category-select">
+                            <option value="1_2">Anime - English</option>
+                            <option value="1_0">Anime - All</option>
+                            <option value="1_4">Anime - Raw</option>
+                        </select>
+                        <select id="filter-select">
+                            <option value="0">No filter</option>
+                            <option value="2">Trusted only</option>
+                        </select>
+                        <button id="search-btn" onclick="doSearch()">Search</button>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="status-dots">
+                        <span class="dot" id="dot-qbit" title="qBittorrent">Q</span>
+                        <span class="dot" id="dot-sonarr" title="Sonarr">S</span>
+                    </div>
+                    <button class="icon-btn" onclick="triggerRescan()" title="Rescan Sonarr">⟳ Sonarr</button>
+                    <button class="icon-btn logout-btn" onclick="doLogout()" title="Sign out">Logout</button>
+                </div>
+            </header>
+
+            <main>
+                <div id="results-area">
+                    <div id="empty-state" class="empty-state">
+                        <div class="empty-icon">検索</div>
+                        <p>Search for anime to get started</p>
+                        <p class="hint">Try searching for batch releases, e.g. "Jujutsu Kaisen batch 1080p"</p>
+                    </div>
+
+                    <div id="loading" class="loading hidden">
+                        <div class="spinner"></div>
+                        <span>Searching Nyaa...</span>
+                    </div>
+
+                    <div id="results-header" class="results-header hidden">
+                        <span id="result-count"></span>
+                        <div class="filter-controls">
+                            <select id="group-filter" onchange="onGroupFilterChange()">
+                                <option value="">All groups</option>
+                            </select>
+                            <label class="batch-toggle">
+                                <input type="checkbox" id="batch-only" onchange="filterResults()">
+                                Batch only
+                            </label>
+                        </div>
+                    </div>
+
+                    <table id="results-table" class="results-table hidden">
+                        <thead>
+                            <tr>
+                                <th class="col-score sortable" onclick="toggleSort('score')">Score <span class="sort-arrow" id="sort-score"></span></th>
+                                <th class="col-name sortable" onclick="toggleSort('name')">Name <span class="sort-arrow" id="sort-name"></span></th>
+                                <th class="col-size sortable" onclick="toggleSort('size')">Size <span class="sort-arrow" id="sort-size"></span></th>
+                                <th class="col-date sortable" onclick="toggleSort('date')">Date <span class="sort-arrow" id="sort-date"></span></th>
+                                <th class="col-seed sortable" onclick="toggleSort('seeders')">S <span class="sort-arrow" id="sort-seeders"></span></th>
+                                <th class="col-leech sortable" onclick="toggleSort('leechers')">L <span class="sort-arrow" id="sort-leechers"></span></th>
+                                <th class="col-dl sortable" onclick="toggleSort('downloads')">D <span class="sort-arrow" id="sort-downloads"></span></th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-body"></tbody>
+                    </table>
+
+                    <div id="no-results" class="empty-state hidden">
+                        <p>No results found</p>
+                    </div>
+
+                    <div id="load-more-area" class="load-more-area hidden">
+                        <button id="load-more-btn" class="load-more-btn" onclick="loadMore()">Load more results</button>
+                        <span id="load-more-status" class="load-more-status"></span>
+                    </div>
+                </div>
+            </main>
+
+            <div id="toast-container" class="toast-container"></div>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <title>AniSearch - Login</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="auth-gate">
+        <div class="auth-box">
+            <h1 class="logo">ani<span>search</span></h1>
+            <p>Sign in to continue</p>
+            <div class="form-group">
+                <input type="text" id="username-input" placeholder="Username" autocomplete="username" spellcheck="false">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password-input" placeholder="Password" autocomplete="current-password">
+            </div>
+            <button onclick="doLogin()">Sign in</button>
+            <div id="auth-error" class="error-msg hidden"></div>
+        </div>
+    </div>
+    <script>
+        function doLogin() {
+            const username = document.getElementById('username-input').value.trim();
+            const password = document.getElementById('password-input').value;
+            const errEl = document.getElementById('auth-error');
+            errEl.classList.add('hidden');
+
+            if (!username || !password) {
+                errEl.textContent = 'Username and password are required';
+                errEl.classList.remove('hidden');
+                return;
+            }
+
+            fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = data.data.redirect || '/';
+                } else {
+                    errEl.textContent = data.error || 'Login failed';
+                    errEl.classList.remove('hidden');
+                }
+            })
+            .catch(() => {
+                errEl.textContent = 'Connection failed';
+                errEl.classList.remove('hidden');
+            });
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Enter') doLogin();
+        });
+
+        document.getElementById('username-input').focus();
+    </script>
+</body>
+</html>
