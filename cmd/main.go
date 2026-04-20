@@ -7,11 +7,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/john3k/anisearch/internal/api"
-	"github.com/john3k/anisearch/internal/config"
-	"github.com/john3k/anisearch/internal/qbit"
-	"github.com/john3k/anisearch/internal/sonarr"
-	"github.com/john3k/anisearch/internal/watcher"
+	"github.com/johnthreekay/anisearch/internal/api"
+	"github.com/johnthreekay/anisearch/internal/config"
+	"github.com/johnthreekay/anisearch/internal/qbit"
+	"github.com/johnthreekay/anisearch/internal/sonarr"
+	"github.com/johnthreekay/anisearch/internal/watcher"
 )
 
 func main() {
