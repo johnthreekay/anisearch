@@ -1,11 +1,8 @@
 services:
   anisearch:
-    build: .
-    # Or if published to GHCR/Docker Hub:
-    # image: ghcr.io/john3k/anisearch:latest
+    image: ghcr.io/johnthreekay/anisearch:latest
     container_name: anisearch
     restart: unless-stopped
-    network_mode: host
     ports:
       - "8978:8978"
     volumes:
@@ -14,8 +11,14 @@ services:
       - TZ=America/Chicago
       # Override config.json values via env vars:
       # - ANISEARCH_APIKEY=your-api-key-here
-      # - QBIT_URL=http://localhost:8080
+      # - QBIT_URL=http://gluetun:8080      # if qbit runs via gluetun
       # - QBIT_USER=admin
       # - QBIT_PASS=adminadmin
-      # - SONARR_URL=http://localhost:8989
+      # - SONARR_URL=http://sonarr:8989
       # - SONARR_APIKEY=your-sonarr-api-key
+    networks:
+      - anime_net
+
+networks:
+  anime_net:
+    external: true
