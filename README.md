@@ -61,7 +61,7 @@ Then set `ANISEARCH_PASSWORD_HASH` to that value, or put it in `config.json` as 
 ```yaml
 services:
   anisearch:
-    build: .
+    image: ghcr.io/johnthreekay/anisearch:latest
     container_name: anisearch
     restart: unless-stopped
     ports:
@@ -70,12 +70,15 @@ services:
       - ./config:/config
     environment:
       - TZ=America/Chicago
+      # Override config.json values via env vars:
+      # - ANISEARCH_APIKEY=your-api-key-here
+      # - QBIT_URL=http://gluetun:8080      # if qbit runs via gluetun
+      # - QBIT_USER=admin
+      # - QBIT_PASS=adminadmin
+      # - SONARR_URL=http://sonarr:8989
+      # - SONARR_APIKEY=your-sonarr-api-key
     networks:
       - anime_net
-
-networks:
-  anime_net:
-    external: true
 ```
 
 ## Building
