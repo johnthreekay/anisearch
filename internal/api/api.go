@@ -8,11 +8,11 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/john3k/anisearch/internal/auth"
-	"github.com/john3k/anisearch/internal/config"
-	"github.com/john3k/anisearch/internal/nyaa"
-	"github.com/john3k/anisearch/internal/qbit"
-	"github.com/john3k/anisearch/internal/sonarr"
+	"github.com/johnthreekay/anisearch/internal/auth"
+	"github.com/johnthreekay/anisearch/internal/config"
+	"github.com/johnthreekay/anisearch/internal/nyaa"
+	"github.com/johnthreekay/anisearch/internal/qbit"
+	"github.com/johnthreekay/anisearch/internal/sonarr"
 )
 
 type Server struct {
