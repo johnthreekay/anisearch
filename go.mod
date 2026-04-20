@@ -1,4 +1,4 @@
-module github.com/john3k/anisearch
+module github.com/johnthreekay/anisearch
 
 go 1.22
 
