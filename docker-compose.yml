@@ -18,7 +18,3 @@ services:
       # - SONARR_APIKEY=your-sonarr-api-key
     networks:
       - anime_net
-
-networks:
-  anime_net:
-    external: true
