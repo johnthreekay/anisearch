@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/john3k/anisearch/internal/qbit"
-	"github.com/john3k/anisearch/internal/sonarr"
+	"github.com/johnthreekay/anisearch/internal/qbit"
+	"github.com/johnthreekay/anisearch/internal/sonarr"
 )
 
 type Watcher struct {
